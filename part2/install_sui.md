@@ -11,7 +11,7 @@ Cargo](https://doc.rust-lang.org/cargo/getting-started/installation.html)
 
 要用Sui开发，你需要Sui的二进制文件。安装完`cargo'后，运行。
 
-``shell
+```shell
 $ cargo install --locked --git https://github.com/MystenLabs/sui.git --branch "devnet" sui
 ```
 
@@ -31,7 +31,7 @@ $ echo $PATH
 ## 集成开发环境
 对于Move的开发，我们推荐使用[Visual Studio Code (vscode)](https://code.visualstudio.com/)IDE，并安装Move Analyzer语言服务器插件。
 
-``shell
+```shell
 $ cargo install --git https://github.com/move-language/move move-analyzer
 ```
 
@@ -43,7 +43,7 @@ $ cargo install --git https://github.com/move-language/move move-analyzer
 
 如果你需要下载和了解Sui的源代码，请克隆Sui的仓库。
 
-``shell
+```shell
 $ git clone https://github.com/MystenLabs/sui.git
 ```
 
