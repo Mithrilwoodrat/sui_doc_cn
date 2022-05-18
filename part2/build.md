@@ -8,7 +8,7 @@ title: 构建 Sui
 
 以下是我们推荐的与Sui互动的工作流程。
 
-1. [安装](.../build/install.md)所有的 *必要的工具*。
+1. [安装](.../install_sui.md)所有的 *必要的工具*。
 1. [快速启动](.../build/move.md) Move *智能合约*。
    1. [编写](./build/move.md#writing-a-package) 一个软件包。
    1. [测试](../build/move.md#testing-a-package) 一个软件包。
