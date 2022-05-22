@@ -1,3 +1,9 @@
 {
-    "plugins": ["toggle-chapters"]
+    "plugins": ["toggle-chapters","insert-logo","katex"],
+    "pluginsConfig": {
+        "insert-logo": {
+          "url": "https://sui.io/_nuxt/img/sui-logo.8d3c44e.svg",
+          "style": "background: none; max-height: 100px; min-height: 30px"
+        }
+      }
 }
