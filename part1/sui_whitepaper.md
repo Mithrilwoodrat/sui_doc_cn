@@ -9,7 +9,7 @@ Sui是一个分布式、开放的智能合约平台，侧重于低延时的去�
 
 
 ## 2.Sui智能合约编程
-Sui的智能合约是用Move语言编写的。Move安全且富有表现力，其类型系统和数据模型天然支持并行协议/执行操作来使得Sui具有很强的可伸缩性。Move是一种用来构建智能合约的开源编程语言，最开始是在Facebook为了Diem区块链开发的。Move语言和平台无关，除了被Sui采用之外，它在其他平台（即OL，StarCoin）也越来越受欢迎。
+Sui的智能合约是用Move[[4]](#4)语言编写的。Move安全且富有表现力，其类型系统和数据模型天然支持并行协议/执行操作来使得Sui具有很强的可伸缩性。Move是一种用来构建智能合约的开源编程语言，最开始是在Facebook为了Diem区块链开发的。Move语言和平台无关，除了被Sui采用之外，它在其他平台（即OL，StarCoin）也越来越受欢迎。
 
 在本节中，我们主要会讨论关于Move语言的一些重要特性，并且解释如何使用它在Sui上创建和管理资产。关于Move的更全面解释可以在《Move Programming Language》里找到，更对针对Sui的Move内容可以在《Sui开发者门户》里找到，关于Sui上下文中Move的更正式的描述可以在第3节中找到。
 
@@ -35,7 +35,7 @@ Sui的全局状态包括一个可编程的对象池，由Move包来创建和管�
 #### 2.1.1 模块
 Move程序被组织为一组模块，每个模块由结构声明和函数声明的列表组成。一个模块可以从其他模块导入结构类型，并调用由其他模块声明的函数。
 
-在一个Move模块中声明的值可以流动(flow)到另一个模块中，比如上面举例的模块Obj可以定义在与定义Obj的模块不同的模块中。这与大多数智能合约语言不同，后者只允许非结构化的字节跨合约边界流动。但是，Move能够支持这一点，因为它提供了封装特性来帮助程序员编写健壮性强的代码。具体来说，Move的类型系统确保了像上面的Obj这样的类型只能由声明该类型的模块中的函数创建、销毁、复制、读取和写入。这允许模块对其声明的类型强制强不变量，即使它们在流经智能合约信任边界时也会继续保持。
+在一个Move模块中声明的值可以流动(flow)到另一个模块中，比如上面举例的模块Obj可以定义在与定义Obj的模块不同的模块中。这与大多数智能合约语言不同，后者只允许非结构化的字节跨合约边界流动。但是，Move能够支持这一点，因为它提供了封装特性来帮助程序员编写健壮性强[[14]](#14)的代码。具体来说，Move的类型系统确保了像上面的Obj这样的类型只能由声明该类型的模块中的函数创建、销毁、复制、读取和写入。这允许模块对其声明的类型强制强不变量，即使它们在流经智能合约信任边界时也会继续保持。
 
 #### 2.1.2 事务(transaction)和入口点(entrypoint)
 
@@ -71,7 +71,7 @@ TxContext是由运行时填充的特殊参数，其中包含创建新对象所�
 ```
 这段代码接受OtherObj和Obj类型的两个对象作为输入，使用第一个对象和生成的ID创建一个新的Obj，然后将两个obj对象传输给事务发送方。一旦传输了对象，它就会流到全局对象池中，并且在事务的其余部分中不能通过代码访问。Transfer模块是Sui标准库的一部分，它包含了将对象传输到用户地址和其他对象的函数。
 
-我们注意到，如果程序员代码忽略了包含一个转移调用，那么Move的类型系统将会拒绝该代码。Move强制资源安全保护，以确保在没有权限的情况下不能创建、复制或意外销毁对象。资源安全的另一个例子是试图两次传输相同的对象，这也会被Move类型系统拒绝。
+我们注意到，如果程序员代码忽略了包含一个转移调用，那么Move的类型系统将会拒绝该代码。Move强制资源安全[[5]](#5)保护，以确保在没有权限的情况下不能创建、复制或意外销毁对象。资源安全的另一个例子是试图两次传输相同的对象，这也会被Move类型系统拒绝。
 
 
 ## 3.自编程模型
@@ -103,7 +103,7 @@ Move代码被组织到模块中，其结构定义如上所示。一个模块由�
 
 函数声明包括形参类型列表、返回类型列表和组成函数体的指令列表。函数声明还可以包括具有能力约束的泛型参数列表，在这种情况下，我们称其为泛型函数声明，例如fun unwrap<T: copy>(p: Wrapper<T>){}。与struct声明类似，泛型形参表示在函数声明时未知的类型，但在声明函数形参、返回值和函数体时使用(在调用函数时提供具体类型)。
 
-可以出现在函数体中的指令包括所有普通的Move指令，但全局存储指令除外(例如，move_to, move_from, borrow_global)。请参阅结尾的Move指令集以获得核心Move指令及其语义的完整列表。在Sui中，持久存储是通过Sui的全局对象池来支持的，而不是核心Move中基于账户的全局存储。
+可以出现在函数体中的指令包括所有普通的Move指令，但全局存储指令除外(例如，move_to, move_from, borrow_global)。请参阅[[14]](#14)的Move指令集以获得核心Move指令及其语义的完整列表。在Sui中，持久存储是通过Sui的全局对象池来支持的，而不是核心Move中基于账户的全局存储。
 
 有四个特定于sui的对象操作。这些操作都会改变对象的所有权元数据(参见3.3节)，并将其返回给全局对象池。
 
@@ -239,7 +239,7 @@ Sui有两种不同的事务类型:发布一个新的Move包，以及调用一个
 
 在本节中，我们从系统的角度来描述Sui，包括确保安全的机制和在出现了拜占庭式容错的情况下各验证者的有效性。我们还解释了客户端的操作，包括轻量级客户端，它们需要在不验证完整状态的情况下对系统状态进行一些保证。
 
-**简短的背景介绍** 在系统层面上，Sui发展自FastPay的低延迟结算系统，扩展到通过用户定义的智能合约操作任意对象，并由具有无权限的质押委托股权证明。对象所有者的基本资产管理基于拜占庭一致性广播的变种，与传统的拜占庭共识实现相比，它具有更低的延迟，也更容易跨多台机器伸缩。当需要完全的协议时，我们使用高吞吐量的基于DAG的共识，例如用来管理锁，当在不同的共享对象上并行执行操作的时候。
+**简短的背景介绍。** 在系统层面上，Sui发展自FastPay[[3]](#3)的低延迟结算系统，扩展到通过用户定义的智能合约操作任意对象，并由具有无权限的质押委托股权证明[[2]](#2)。对象所有者的基本资产管理基于拜占庭一致性广播[[6]](#6)的变种，与传统的拜占庭共识[[8]](#8),[[11]](#11),[[12]](#12)实现相比，它具有更低的延迟，也更容易跨多台机器伸缩。当需要完全的协议时，我们使用高吞吐量的基于DAG的共识，例如[[9]](#9)用来管理锁，当在不同的共享对象上并行执行操作的时候。
 
 **协议大纲**
 
@@ -319,8 +319,8 @@ Sui的验证者依靠大量的数据结构来表示状态。我们根据它们�
 
 **结论：** 处理事务和证书的逻辑导致了许多重要的属性：
 - **因果关系和并行性**。事务和证书的处理条件都确保了因果执行:一个验证者只有在处理了所有创建该事务所依赖的对象的证书(包括所有的、共享的和只读的)之后，才会通过签署一项交易来“投票”。类似地，只有当中心所依赖的所有输入对象都存在于其本地对象映射中时，中心才会处理证书。这就强加了一个因果执行顺序，但也允许不相互依赖的事务在不同的核心或机器上并行执行。
-- **一次签名，确保安全**。所有拥有的输入对象在Lock中锁定𝑣 [·]设置为使用它们通过检查的第一个事务Tx，然后设置为使用该对象作为输入的第一个证书。我们称此操作为将对象锁定到该事务，并且在一个时期内不存在解锁操作。因此，验证者在每个锁上只签署一个事务，这是一致广播[6]的基本组成部分，因此也保证了Sui的安全性。
-- **灾难恢复**。一个权威机构检测到同一个锁的两个相互矛盾的证书，它有无法恢复的拜占庭行为的证据——即quorum诚实权威假设不成立的证据。这两个相互矛盾的证书是一个欺诈证明[1]，可以与所有权威机构和副本共享，以触发灾难恢复过程。权威机构还可能得到不可恢复的拜占庭行为的其他形式的证明，比如代表证书执行错误的效果上的>1/3签名(EffSign)。或者，一个证书的输入对象不能代表以前处理过的证书的正确输出。这些也可以打包为欺诈证据，并与所有当局和副本共享。请注意，这些不同于那些可以容忍的少数权威(按股份≤1/3)或对象所有者(任何数字)是拜占庭或模棱两可的证据，它们可以在没有任何服务中断的情况下被容忍。
+- **一次签名，确保安全**。所有拥有的输入对象在Lock中锁定𝑣 [·]设置为使用它们通过检查的第一个事务Tx，然后设置为使用该对象作为输入的第一个证书。我们称此操作为将对象锁定到该事务，并且在一个时期内不存在解锁操作。因此，验证者在每个锁上只签署一个事务，这是一致广播[[6]](#6)的基本组成部分，因此也保证了Sui的安全性。
+- **灾难恢复**。一个权威机构检测到同一个锁的两个相互矛盾的证书，它有无法恢复的拜占庭行为的证据——即quorum诚实权威假设不成立的证据。这两个相互矛盾的证书是一个欺诈证明[[1]](#1)，可以与所有权威机构和副本共享，以触发灾难恢复过程。权威机构还可能得到不可恢复的拜占庭行为的其他形式的证明，比如代表证书执行错误的效果上的>1/3签名(EffSign)。或者，一个证书的输入对象不能代表以前处理过的证书的正确输出。这些也可以打包为欺诈证据，并与所有当局和副本共享。请注意，这些不同于那些可以容忍的少数权威(按股份≤1/3)或对象所有者(任何数字)是拜占庭或模棱两可的证据，它们可以在没有任何服务中断的情况下被容忍。
 - **终局性**。于Lock中索引的任何读请求，验证者都会返回一个证书(TxCert)和签名效果(EffSign)𝑣 , Ct𝑣 和Obj𝑣 、Sync𝑣。一笔交易如果超过法定人数的验证者报告Tx包括在他们的Ct𝑣存储里，那么这笔交易就是最终的交易。这意味着效果证书(EffCert)是终局性的可转移证明。然而，使用对象的证书也证明了所有的依赖关系其因果路径中的证书也是最终的。向任何一方提供证书，然后将其提交给绝大多数验证者进行处理，也确保了证书效果的终局性。注意，finality比fastpay[[3]](#3)要晚，以确保重新配置时的安全性。然而，中心可以在看到证书时应用事务的效果，而不是等待提交。
 
 ### 4.4 所有者、授权和共享对象
@@ -344,7 +344,7 @@ Sui的验证者依靠大量的数据结构来表示状态。我们根据它们�
 
 ### 4.6 桥
 
-对轻客户端和通过拜占庭协议管理的共享对象的原生支持，允许Sui支持与其他区块链[[13]](#13)的双向桥。这类桥梁的信任假设反映了Sui和其他区块链的信任假设，如果其他的区块链也支持轻客户端，则不需要依赖与受信任的预言机或者是硬件。
+对轻客户端和通过拜占庭协议管理的共享对象的原生支持，允许Sui支持与其他区块链[[13]](#13)的双向桥。这类桥梁的信任假设反映了Sui和其他区块链的信任假设，如果其他的区块链也支持轻客户端，则不需要依赖与受信任的预言机或者是硬件[[7]](#7)。
 
 桥用于导入发布在另一个区块链上的资产，并将其表示为一个封装在Sui系统中的资产。最终，可以解锁被包装的资产，并将其传输回本机区块链上的用户。桥还允许在Sui上发行的资产被锁定，并作为包装资产在其他区块链上使用。最终，在另一个系统上被包装的对象可以被销毁，而Sui上的对象更新以反映任何状态或所有权的变化，并解锁。
 
@@ -364,12 +364,96 @@ Sui的验证者依靠大量的数据结构来表示状态。我们根据它们�
 
 **奖励和代币经济学:** Sui有一种原生的令牌Sui，具有固定的供给。SUI是用来支付gas费用的，也可以作为一个epoch的委托质押。在这个epoch，验证者的投票权就是这种委托利益的功能。在epoch结束时，通过所有交易收取的费用将根据他们对Sui的经营贡献分配给验证者，反过来，他们将一部分费用作为对委托给他们的地址的奖励。我们将Sui代币经济学的完整描述推迟到一篇专门的论文中。
 
+### 4.8 验证者和副本更新
 
-<span id="3"></span>
-<span id="6">具体内容</span>
-<span id="9"></span>
-<span id="13"></span>
-<span id="15"></span>
+**为客户创造价值。** 由于客户端故障或非拜占庭验证者故障，一些验证者可能没有处理所有证书。因此，依赖于这些证书生成的缺失对象的因果相关事务将被拒绝。然而，客户总是可以更新一个可靠的验证者，使其能够处理正确的事务。它可以使用自己的过去证书存储，或者使用一个或多个其他诚实的验证者作为过去证书的来源。
+
+给定一个证书`c`和一个存储`Ct𝑣`，其中包括 c 和它的因果历史，客户端可以更新一个c也能被接受的诚实验证者v'。这涉及到寻找到证书c不在v'内的最小集，这样以便在应用时，c要求的输入对象v‘中都拥有。更新一个滞后的，使用包含证书TxCert的存储Ct𝑣的验证者B牵涉到：
+- 客户端维护一个要同步的证书列表，最初设置为只包含TxCert。
+- 客户端认为最后一个TxCert需要同步。它在TxCert中提取Tx并派生其所有输入对象(使用input (Tx))。
+- 对于每一个输入对象，它都会检查最后生成或变异的Tx（使用𝐶𝑡𝑣上的Sync𝑣索引）是否有一个B内的证书，否则就从𝐶𝑡𝑣上读取证书并添加到要同步的证书列表里。
+- 如果没有更多的证书可以添加到列表中(因为没有更多的输入从𝐵丢失)，证书列表按因果顺序排序，并提交到𝐵。
+
+
+上面的算法也适用于将对象更新到特定版本以启用新事务。在本例中，生成对象版本的Tx的证书，在Sync中找到𝑣 [ObjRef]被提交给了滞后验证者。一旦在𝐵上执行，就可以使用正确版本的对象。
+
+执行此操作的客户端称为中继器。可以有多个中继器独立和并发操作。他们在诚信方面是不可信的，他们的操作是无key的。除了客户端，中心还可以运行中继逻辑来更新彼此，副本操作服务也可以作为中继来更新滞后的中心。
+
+**bulk。** 验证者为追随者(follower)提供设施，以便他们在处理证书时接收更新。这允许副本维护验证者状态的最新视图。此外，验证者可以使用推拉式gossip网络在短期内互相更新最新处理的交易，以减少中继者执行这一功能的需要。在较长的时期内，滞后的验证者可以使用周期性的状态承诺，在时期边界或更频繁地，以确保他们已经处理了一套完整的证书，直到某些检查点。
+
+## 5. 缩放和延迟
+
+Sui系统允许通过将更多资源(即一台机器内或多台机器上的cpu、内存、网络和存储)分配给事务处理的权限进行伸缩。更多的资源会增加处理交易的能力，从而增加为这些资源提供资金的费用收入。更多的资源还会导致更低的延迟，因为操作无需等待必要的资源变得可用就可以执行。
+
+**吞吐量。** 为了确保更多的资源导致准线性容量的增加，Sui设计积极地减少了瓶颈和需要在权限内全局锁的同步点。事务处理被清晰地划分为两个阶段，即
+    (1)确保事务对特定版本的所有或共享对象具有独占访问权
+    (2)随后执行事务并提交其效果。
+
+阶段(1)需要一个事务来获取对象粒度上的分布式锁。对于拥有的对象，这是通过可靠的广播原语执行的，不需要在权限内进行全局同步，因此可以通过ObjID跨多台机器分片锁管理来扩展。对于涉及共享对象的事务，需要使用共识协议来排序，这对这些事务施加了全局顺序，并有可能成为瓶颈。然而，最近关于工程高吞吐量共识协议[[9]](#9)的进展表明，顺序执行是状态机复制的瓶颈，而不是排序。在Sui中，排序只用于确定输入共享对象的版本，即增加对象版本号并将其与事务摘要相关联，而不是执行顺序执行。
+
+阶段(2)发生在所有输入对象的版本为验证者所知的时候(并且在验证者之间安全地达成一致)，并且涉及到Move事务的执行及其效果的承诺。一旦知道了输入对象的版本，就可以执行完全平行地发生。将虚拟机移动到多个核心或物理机器上，读取版本控制的输入对象、执行并将结果对象从存储中写入存储中。对象和事务(除了订单锁映射)的存储一致性要求非常宽松，允许每个验证者在内部使用可伸缩的分布式键值存储。执行是幂等的，这使得处理执行的组件的崩溃或硬件故障也很容易恢复。
+
+因此，相互之间没有因果关系的事务可以并行执行。因此，智能合约设计者可以在其合约内设计对象和操作的数据模型，以利用这种并行性。
+
+检查点和状态承诺是在关键事务处理路径上计算出来的，以避免阻塞新事务的处理。这涉及到对已提交数据的读操作，而不是在事务到达终结之前要求进行计算和协商。因此，它们不会影响处理新事务的延迟或吞吐量，并且本身可以跨可用资源分布。
+
+读取可以受益于非常主动的、可伸缩的缓存。验证者签署并提供轻客户端读取所需的所有数据，这些数据可以由分布式存储作为静态数据提供。证书作为其交易和对象的完整因果历史的信任根(roots of trust)。状态承诺进一步允许整个系统对所有处理的状态和事务具有定期的全局信任根，至少每个epoch，或者更频繁。
+
+**延迟**。智能合约设计者可以灵活地控制他们定义的操作的延迟，这取决于它们涉及的是拥有的对象还是共享的对象。拥有的对象在执行和提交之前依赖于可靠的广播，这需要两次往返于法定验证者以达到最终结果。另一方面，涉及共享对象的操作需要一个一致的广播来创建证书，然后在一个共识协议中处理，这导致延迟增加(从[[9]](#9)到仲裁的4到8次往返)。
+
+ 
+
+<span id="1">[1].Mustafa Al-Bassam, Alberto Sonnino, Vitalik Buterin, and Ismail Khoffi. 2021.
+Fraud and Data Availability Proofs: Detecting Invalid Blocks in Light Clients.
+In Financial Cryptography and Data Security - 25th International Conference, FC
+2021, Virtual Event, March 1-5, 2021, Revised Selected Papers, Part II (Lecture Notes
+in Computer Science, Vol. 12675), Nikita Borisov and Claudia Diaz (Eds.). Springer,
+279–298</span>
+<span id="2">[2] Shehar Bano, Alberto Sonnino, Mustafa Al-Bassam, Sarah Azouvi, Patrick McCorry, Sarah Meiklejohn, and George Danezis. 2019. SoK: Consensus in the Age
+of Blockchains. In Proceedings of the 1st ACM Conference on Advances in Financial
+Technologies, AFT 2019, Zurich, Switzerland, October 21-23, 2019. ACM, 183–198.</span>
+<span id="3">[3] Mathieu Baudet, George Danezis, and Alberto Sonnino. 2020. FastPay: HighPerformance Byzantine Fault Tolerant Settlement. In AFT ’20: 2nd ACM Conference on Advances in Financial Technologies, New York, NY, USA, October 21-23,
+2020. ACM, 163–177.</span>
+<span id="4">[4] Sam Blackshear, Evan Cheng, David L. Dill, Victor Gao, Ben Maurer, Todd
+Nowacki, Alistair Pott, Shaz Qadeer, Ra in, Dario Russi, Stephane Sezer, Tim Zakian, and Runtian Zhou. 2019. Move: A Language With Programmable Resources.
+https://developers.libra.org/docs/move-paper.</span>
+<span id="5">[5] Sam Blackshear, David L. Dill, Shaz Qadeer, Clark W. Barrett, John C. Mitchell,
+Oded Padon, and Yoni Zohar. 2020. Resources: A Safe Language Abstraction for
+Money. CoRR abs/2004.05106 (2020). arXiv:2004.05106 https://arxiv.org/abs/
+2004.05106</span>
+<span id="6">[6] Christian Cachin, Rachid Guerraoui, and Luís Rodrigues. 2011. Introduction to
+reliable and secure distributed programming. Springer Science & Business Media</span>
+<span id="7">[7] Panagiotis Chatzigiannis, Foteini Baldimtsi, and Konstantinos Chalkias. 2021.
+SoK: Blockchain Light Clients. IACR Cryptol. ePrint Arch. (2021), 1657.</span>
+<span id="8">[8] Daniel Collins, Rachid Guerraoui, Jovan Komatovic, Petr Kuznetsov, Matteo
+Monti, Matej Pavlovic, Yvonne-Anne Pignolet, Dragos-Adrian Seredinschi, Andrei Tonkikh, and Athanasios Xygkis. 2020. Online Payments by Merely Broadcasting Messages. In 50th Annual IEEE/IFIP International Conference on Dependable
+Systems and Networks, DSN 2020, Valencia, Spain, June 29 - July 2, 2020. IEEE,
+26–38.</span>
+<span id="9">[9] George Danezis, Eleftherios Kokoris-Kogias, Alberto Sonnino, and Alexander
+Spiegelman. 2021. Narwhal and Tusk: A DAG-based Mempool and Efficient BFT
+Consensus. CoRR abs/2105.11827 (2021).</span>
+<span id="10">[10] David L. Dill, Wolfgang Grieskamp, Junkil Park, Shaz Qadeer, Meng Xu, and
+Jingyi Emma Zhong. 2021. Fast and Reliable Formal Verification of Smart Contracts with the Move Prover. CoRR abs/2110.08362 (2021). arXiv:2110.08362
+https://arxiv.org/abs/2110.08362</span>
+<span id="11">[11] Rachid Guerraoui, Petr Kuznetsov, Matteo Monti, Matej Pavlovic, and DragosAdrian Seredinschi. 2018. AT2: Asynchronous Trustworthy Transfers. CoRR
+abs/1812.10844 (2018).</span>
+<span id="12">[12] Rachid Guerraoui, Petr Kuznetsov, Matteo Monti, Matej Pavlovic, and DragosAdrian Seredinschi. 2019. The Consensus Number of a Cryptocurrency. In
+Proceedings of the 2019 ACM Symposium on Principles of Distributed Computing,
+PODC 2019, Toronto, ON, Canada, July 29 - August 2, 2019, Peter Robinson and
+Faith Ellen (Eds.). ACM, 307–316.</span>
+<span id="13">[13] Patrick McCorry, Chris Buckland, Bennet Yee, and Dawn Song. 2021. SoK:
+Validating Bridges as a Scaling Solution for Blockchains. IACR Cryptol. ePrint
+Arch. (2021), 1589.</span>
+<span id="14">[14] Marco Patrignani and Sam Blackshear. 2021. Robust Safety for Move. CoRR
+abs/2110.05043 (2021). arXiv:2110.05043 https://arxiv.org/abs/2110.05043</span>
+<span id="15">[15] Jerome H Saltzer and Michael D Schroeder. 1975. The protection of information
+in computer systems. Proc. IEEE 63, 9 (1975), 1278–1308.</span>
+<span id="16">[16] Jingyi Emma Zhong, Kevin Cheang, Shaz Qadeer, Wolfgang Grieskamp, Sam
+Blackshear, Junkil Park, Yoni Zohar, Clark W. Barrett, and David L. Dill. 2020.
+The Move Prover. In Computer Aided Verification - 32nd International Conference,
+CAV 2020, Los Angeles, CA, USA, July 21-24, 2020, Proceedings, Part I (Lecture
+Notes in Computer Science, Vol. 12224), Shuvendu K. Lahiri and Chao Wang (Eds.).
+Springer, 137–150. https://doi.org/10.1007/978-3-030-53288-8_7</span>
 
 
 
