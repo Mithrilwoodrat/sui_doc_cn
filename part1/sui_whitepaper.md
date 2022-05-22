@@ -409,45 +409,60 @@ In Financial Cryptography and Data Security - 25th International Conference, FC
 2021, Virtual Event, March 1-5, 2021, Revised Selected Papers, Part II (Lecture Notes
 in Computer Science, Vol. 12675), Nikita Borisov and Claudia Diaz (Eds.). Springer,
 279–298</span>
+
 <span id="2">[2] Shehar Bano, Alberto Sonnino, Mustafa Al-Bassam, Sarah Azouvi, Patrick McCorry, Sarah Meiklejohn, and George Danezis. 2019. SoK: Consensus in the Age
 of Blockchains. In Proceedings of the 1st ACM Conference on Advances in Financial
 Technologies, AFT 2019, Zurich, Switzerland, October 21-23, 2019. ACM, 183–198.</span>
+
 <span id="3">[3] Mathieu Baudet, George Danezis, and Alberto Sonnino. 2020. FastPay: HighPerformance Byzantine Fault Tolerant Settlement. In AFT ’20: 2nd ACM Conference on Advances in Financial Technologies, New York, NY, USA, October 21-23,
 2020. ACM, 163–177.</span>
+2021. 
 <span id="4">[4] Sam Blackshear, Evan Cheng, David L. Dill, Victor Gao, Ben Maurer, Todd
 Nowacki, Alistair Pott, Shaz Qadeer, Ra in, Dario Russi, Stephane Sezer, Tim Zakian, and Runtian Zhou. 2019. Move: A Language With Programmable Resources.
 https://developers.libra.org/docs/move-paper.</span>
+
 <span id="5">[5] Sam Blackshear, David L. Dill, Shaz Qadeer, Clark W. Barrett, John C. Mitchell,
 Oded Padon, and Yoni Zohar. 2020. Resources: A Safe Language Abstraction for
 Money. CoRR abs/2004.05106 (2020). arXiv:2004.05106 https://arxiv.org/abs/
 2004.05106</span>
+
 <span id="6">[6] Christian Cachin, Rachid Guerraoui, and Luís Rodrigues. 2011. Introduction to
 reliable and secure distributed programming. Springer Science & Business Media</span>
+
 <span id="7">[7] Panagiotis Chatzigiannis, Foteini Baldimtsi, and Konstantinos Chalkias. 2021.
 SoK: Blockchain Light Clients. IACR Cryptol. ePrint Arch. (2021), 1657.</span>
+
 <span id="8">[8] Daniel Collins, Rachid Guerraoui, Jovan Komatovic, Petr Kuznetsov, Matteo
 Monti, Matej Pavlovic, Yvonne-Anne Pignolet, Dragos-Adrian Seredinschi, Andrei Tonkikh, and Athanasios Xygkis. 2020. Online Payments by Merely Broadcasting Messages. In 50th Annual IEEE/IFIP International Conference on Dependable
 Systems and Networks, DSN 2020, Valencia, Spain, June 29 - July 2, 2020. IEEE,
 26–38.</span>
+
 <span id="9">[9] George Danezis, Eleftherios Kokoris-Kogias, Alberto Sonnino, and Alexander
 Spiegelman. 2021. Narwhal and Tusk: A DAG-based Mempool and Efficient BFT
 Consensus. CoRR abs/2105.11827 (2021).</span>
+
 <span id="10">[10] David L. Dill, Wolfgang Grieskamp, Junkil Park, Shaz Qadeer, Meng Xu, and
 Jingyi Emma Zhong. 2021. Fast and Reliable Formal Verification of Smart Contracts with the Move Prover. CoRR abs/2110.08362 (2021). arXiv:2110.08362
 https://arxiv.org/abs/2110.08362</span>
+
 <span id="11">[11] Rachid Guerraoui, Petr Kuznetsov, Matteo Monti, Matej Pavlovic, and DragosAdrian Seredinschi. 2018. AT2: Asynchronous Trustworthy Transfers. CoRR
 abs/1812.10844 (2018).</span>
+
 <span id="12">[12] Rachid Guerraoui, Petr Kuznetsov, Matteo Monti, Matej Pavlovic, and DragosAdrian Seredinschi. 2019. The Consensus Number of a Cryptocurrency. In
 Proceedings of the 2019 ACM Symposium on Principles of Distributed Computing,
 PODC 2019, Toronto, ON, Canada, July 29 - August 2, 2019, Peter Robinson and
 Faith Ellen (Eds.). ACM, 307–316.</span>
+
 <span id="13">[13] Patrick McCorry, Chris Buckland, Bennet Yee, and Dawn Song. 2021. SoK:
 Validating Bridges as a Scaling Solution for Blockchains. IACR Cryptol. ePrint
 Arch. (2021), 1589.</span>
+
 <span id="14">[14] Marco Patrignani and Sam Blackshear. 2021. Robust Safety for Move. CoRR
 abs/2110.05043 (2021). arXiv:2110.05043 https://arxiv.org/abs/2110.05043</span>
+
 <span id="15">[15] Jerome H Saltzer and Michael D Schroeder. 1975. The protection of information
 in computer systems. Proc. IEEE 63, 9 (1975), 1278–1308.</span>
+
 <span id="16">[16] Jingyi Emma Zhong, Kevin Cheang, Shaz Qadeer, Wolfgang Grieskamp, Sam
 Blackshear, Junkil Park, Yoni Zohar, Clark W. Barrett, and David L. Dill. 2020.
 The Move Prover. In Computer Aided Verification - 32nd International Conference,
